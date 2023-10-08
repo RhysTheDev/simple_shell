@@ -10,9 +10,10 @@
 #include <sys/wait.h>
 #include <stddef.h>
 
+int main(int argc, char *argv[]);
 void display_prompt(void);
 int _strlen(char *s);
-char *get_input(void);
+char *get_input(int argc, char *argv[]);
 void exec_command(char *input);
 void wait_for_child(pid_t pid);
 
