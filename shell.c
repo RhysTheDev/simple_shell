@@ -3,11 +3,12 @@
 
 /**
  * main - function to initialize shell
- *
+ * @argc: number of command line args
+ * @argv: array of ptrs to command line args
  *
  * Return: 1 if success; 0 if failure
  */
-int main(void)
+int main(int argc, char *argv[])
 {
 	while (1)
 	{
@@ -15,9 +16,8 @@ int main(void)
 		pid_t pid;
 
 		display_prompt();
-		input = get_input();
+		input = get_input(argc, argv);
 		pid = fork();
-
 		if (input == NULL)
 		{
 			printf("\n");
@@ -35,8 +35,6 @@ int main(void)
 
 		free(input);
 	}
-
-	printf("Goodbye!\n");
 	return (EXIT_SUCCESS);
 }
 
