@@ -6,11 +6,11 @@
  *
  * Return: None
  */
-void exec_command(char *input)
+void exec_command(char *input, char **command_args)
 {
-	if (execlp(input, input, (char *)NULL) == -1)
+	if (execve(input, command_args, NULL) == -1)
 	{
-		perror("exec");
+		perror("hsh");
 		exit(EXIT_FAILURE);
 	}
 }
