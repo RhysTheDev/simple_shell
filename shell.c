@@ -12,11 +12,27 @@ int main(int argc, char *argv[])
 {
 	while (1)
 	{
-		char *input;
+		char *input, *executable, *command_args[MAX_INPUT_SIZE];
+		int i = 1;
 		pid_t pid;
 
 		display_prompt();
 		input = get_input(argc, argv);
+
+		executable = find_executable(input);
+		if (executable == NULL)
+		{
+			printf("No such file or directory");
+			exit(EXIT_FAILURE);
+		}
+		command_args[0] = executable;
+		while (i < argc)
+		{
+			command_args[i] = argv[i];
+			i++;
+		}
+		command_args[argc] = NULL;
+
 		pid = fork();
 		if (input == NULL)
 		{
@@ -29,7 +45,7 @@ int main(int argc, char *argv[])
 			perror("fork");
 			exit(EXIT_FAILURE);
 		} else if (pid == 0)
-			exec_command(input);
+			exec_command(executable, command_args);
 		else
 			wait_for_child(pid);
 

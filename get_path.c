@@ -1,0 +1,33 @@
+#include "main.h"
+
+/**
+ * find_executable - get path of executable file of a command
+ * @command: command passed
+ *
+ * Return: path to file; NULL if command doesn't exit
+ */
+char *find_executable(char *command)
+{
+	char *path, *token, *full_path, *executable;
+
+	executable = NULL;
+	path = _getenv("PATH");
+	token = strtok(path, ":");
+
+	if (path == NULL)
+		return (NULL);
+	while (token != NULL)
+	{
+		full_path = malloc(_strlen(token) + _strlen(command) + 2);
+		if (full_path == NULL)
+			return (NULL);
+		if (access(full_path, F_OK) == 0)
+		{
+			executable = full_path;
+			break;
+		}
+		free(full_path);
+		token = strtok(NULL, ":");
+	}
+	return (executable);
+}
