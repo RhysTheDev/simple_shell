@@ -15,6 +15,12 @@ int main(void)
 	{
 		buffer = display_prompt();
 
+		if (_strcmp(buffer, "exit") == 0)
+		{
+			free(buffer);
+			exit(EXIT_SUCCESS);
+		}
+
 		/* Read user buffer */
 		buffer[_strcspn_(buffer, "\n")] = '\0';
 

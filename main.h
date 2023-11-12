@@ -14,30 +14,39 @@
 
 extern char **environ;
 
-int main(void);
-
-char *_strdup(char *str);
-
-void _strcnpy(char *dest, const char *src, size_t n);
-
-char *display_prompt(void);
+int _strncmp(char *str1, char *str2, int n);
 
 int _strlen(char *s);
 
-char *get_input(size_t *input_size);
+int _strcmp(char *s1, char *s2);
+
+int main(void);
+
+void mainExecCommand(char *input);
+
+int tokenize(char *input, char *tokens[]);
+
+void executeCommand(char *command, char *args[]);
+
+void searchAndExecute(char *command, char *args[]);
 
 void checkChildProcess(pid_t pid);
 
 char *_get_path_of_exe(char *command);
 
-void mainExecCommand(char *input);
-
 char *_getenv(char *name);
 
-int _strncmp(char *str1, char *str2, int n);
+char *display_prompt(void);
+
+void _strcnpy(char *dest, const char *src, size_t n);
+
+char *_strdup(char *str);
 
 int _strcspn_(const char *str, const char *reject);
 
+char *get_input(size_t *input_size);
+
+void sigintHandler(int signal);
 
 #define MAX_INPUT_SIZE 1024
 
