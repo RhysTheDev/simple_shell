@@ -8,7 +8,17 @@
  */
 void execCommand(char *input)
 {
-	char *args[] = {input, NULL};
+	char *token;
+	char *args[MAX_INPUT_SIZE / 2 + 1];
+	int i = 0;
+
+	token = strtok(input, " ");
+	while (token != NULL)
+	{
+		args[i++] = token;
+		token = strtok(NULL, " ");
+	}
+	args[i] = NULL;
 
 	if (execve(input, args, NULL) == -1)
 	{
