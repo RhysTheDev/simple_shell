@@ -3,7 +3,7 @@
 /**
  * get_input - read input from users
  * @argc: number of command line args
- * @argv: array of ptrs to command line args
+ * @argv: array of pointers to command line args
  *
  * Return: ptr to str; NULL if input is null
  */

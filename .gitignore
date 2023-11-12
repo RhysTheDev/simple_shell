@@ -3,3 +3,7 @@ shell
 shell_backup
 commmand_parser
 get_path_backup
+CMakeLists.txt
+cmake-build-debug/
+.idea/
+hsh

@@ -17,7 +17,7 @@ void display_prompt(void);
 int _strlen(char *s);
 char *get_input(int argc, char *argv[]);
 void wait_for_child(pid_t pid);
-char *find_executable(char *command);
+char *_get_path_of_exe(char *command);
 void exec_command(char *input, char **command_args);
 char *_getenv(char *name);
 int _strncmp(char *str1, char *str2, int n);

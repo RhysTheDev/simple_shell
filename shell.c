@@ -10,16 +10,22 @@
  */
 int main(int argc, char *argv[])
 {
-	while (1)
+    int status = 1;
+	while (status)
 	{
+        display_prompt();
+
+        status = isatty(STDIN_FILENO);
+        if (status == 1)
+            write(STDOUT_FILENO, "$ ", 2);
+
 		char *input, *executable, *command_args[MAX_INPUT_SIZE];
 		int i = 1;
 		pid_t pid;
 
-		display_prompt();
 		input = get_input(argc, argv);
 
-		executable = find_executable(input);
+		executable = _get_path_of_exe(input);
 		if (executable == NULL)
 		{
 			printf("No such file or directory");

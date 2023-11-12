@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * find_executable - get path of executable file of a command
+ * _get_path_of_exe - get path of executable file of a command
  * @command: command passed
  *
  * Return: path to file; NULL if command doesn't exit
  */
-char *find_executable(char *command)
+char *_get_path_of_exe(char *command)
 {
 	char *path, *token, *full_path, *executable;
 
