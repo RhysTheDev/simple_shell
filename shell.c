@@ -3,53 +3,36 @@
 
 /**
  * main - function to initialize shell
- * @argc: number of command line args
- * @argv: array of ptrs to command line args
  *
  * Return: 1 if success; 0 if failure
  */
-int main(int argc, char *argv[])
+int main(void)
 {
-	while (1)
+	int status = 1;
+	char *buffer;
+
+	while (status)
 	{
-		char *input, *executable, *command_args[MAX_INPUT_SIZE];
-		int i = 1;
+		buffer = display_prompt();
+
+		/* Read user buffer */
+		buffer[_strcspn_(buffer, "\n")] = '\0';
+
+		/* Fork a new process */
 		pid_t pid;
 
-		display_prompt();
-		input = get_input(argc, argv);
-
-		executable = find_executable(input);
-		if (executable == NULL)
-		{
-			printf("No such file or directory");
-			exit(EXIT_FAILURE);
-		}
-		command_args[0] = executable;
-		while (i < argc)
-		{
-			command_args[i] = argv[i];
-			i++;
-		}
-		command_args[argc] = NULL;
-
 		pid = fork();
-		if (input == NULL)
-		{
-			printf("\n");
-			break;
-		}
-
-		if (pid == -1)
+		if (pid == 1)
+			checkChildProcess(pid);
+		else if (pid == 0)
+			execCommand(buffer);
+		else if (pid == -1)
 		{
 			perror("fork");
 			exit(EXIT_FAILURE);
-		} else if (pid == 0)
-			exec_command(executable, command_args);
-		else
-			wait_for_child(pid);
+		}
+		free(buffer);
 
-		free(input);
 	}
 	return (EXIT_SUCCESS);
 }
