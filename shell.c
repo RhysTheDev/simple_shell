@@ -23,14 +23,14 @@ int main(void)
 
 		pid = fork();
 		if (pid == 0)
-            execCommand(buffer);
-        else if (pid == -1)
-        {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
+			execCommand(buffer);
+		else if (pid == -1)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
 		else
-            checkChildProcess(pid);
+			checkChildProcess(pid);
 
 		free(buffer);
 
