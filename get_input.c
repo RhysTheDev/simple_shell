@@ -2,33 +2,27 @@
 
 /**
  * get_input - read input from users
- * @argc: number of command line args
- * @argv: array of pointers to command line args
+ * @input_size: size of the buffer
  *
  * Return: ptr to str; NULL if input is null
  */
 
-char *get_input(int argc, char *argv[])
+char *get_input(size_t *input_size)
 {
-	size_t len = 0;
-	char *command = NULL;
-	char *input = malloc(MAX_INPUT_SIZE);
+	char *buffer = NULL;
+	ssize_t read;
 
-	if (input == NULL)
-		return (NULL);
+	read = getline(&buffer, &input_size, stdin);
 
-	fgets(input, MAX_INPUT_SIZE, stdin);
-	if (feof(stdin) != 0)
-		exit(0);
+	if (read == -1)
+	{
+		free(buffer);
+		write(STDOUT_FILENO, "EXITING THE SHELL AT get_input", MAX_INPUT_SIZE);
+		exit(EXIT_SUCCESS);
+	}
 
-	len = _strlen(input);
-	if (len > 0 && input[len - 1] == '\n')
-		input[len - 1] = '\0';
+	if (buffer[read - 1] == '\n')
+		buffer[read - 1] = '\0';
 
-	if (argc > 1)
-		command = argv[1];
-
-	if (command != NULL)
-		input = command;
-	return (input);
+	return (buffer);
 }
