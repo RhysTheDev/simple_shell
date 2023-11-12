@@ -22,15 +22,16 @@ int main(void)
 		pid_t pid;
 
 		pid = fork();
-		if (pid == 1)
-			checkChildProcess(pid);
-		else if (pid == 0)
-			execCommand(buffer);
-		else if (pid == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
+		if (pid == 0)
+            execCommand(buffer);
+        else if (pid == -1)
+        {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+		else
+            checkChildProcess(pid);
+
 		free(buffer);
 
 	}

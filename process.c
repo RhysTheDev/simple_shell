@@ -13,7 +13,6 @@ void execCommand(char *input)
 	if (execve(input, args, NULL) == -1)
 	{
 		perror("hsh");
-		exit(EXIT_FAILURE);
 	}
 }
 
