@@ -12,7 +12,7 @@ char *get_input(size_t *input_size)
 	char *buffer = NULL;
 	ssize_t read;
 
-	read = getline(&buffer, &input_size, stdin);
+	read = getline(&buffer, input_size, stdin);
 
 	if (read == -1)
 	{

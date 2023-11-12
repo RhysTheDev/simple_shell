@@ -13,7 +13,8 @@ char *display_prompt(void)
 	char *buffer;
 
 	status = isatty(STDIN_FILENO);
-	if (status == -1)
+
+	if (status == 1)
 		write(STDOUT_FILENO, "$ ", 2);
 
 	buffer = get_input(&input_size);
