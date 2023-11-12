@@ -23,7 +23,7 @@ int main(void)
 
 		pid = fork();
 		if (pid == 0)
-			execCommand(buffer);
+			mainExecCommand(buffer);
 		else if (pid == -1)
 		{
 			perror("fork");
