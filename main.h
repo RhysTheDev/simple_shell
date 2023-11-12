@@ -48,6 +48,9 @@ char *get_input(size_t *input_size);
 
 void sigintHandler(int signal);
 
+void printEnvironment(void);
+
+
 #define MAX_INPUT_SIZE 1024
 
 #endif

@@ -20,6 +20,8 @@ int main(void)
 			free(buffer);
 			exit(EXIT_SUCCESS);
 		}
+		if (_strcmp(buffer, "env") == 0)
+			printEnvironment();
 
 		/* Read user buffer */
 		buffer[_strcspn_(buffer, "\n")] = '\0';
