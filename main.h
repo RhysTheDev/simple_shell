@@ -12,9 +12,13 @@
 #include <limits.h>
 #include <errno.h>
 
-extern char** environ;
+extern char **environ;
 
 int main(void);
+
+char *_strdup(char *str);
+
+void _strcnpy(char *dest, const char *src, size_t n);
 
 char *display_prompt(void);
 
@@ -26,7 +30,7 @@ void checkChildProcess(pid_t pid);
 
 char *_get_path_of_exe(char *command);
 
-void execCommand(char *input);
+void mainExecCommand(char *input);
 
 char *_getenv(char *name);
 

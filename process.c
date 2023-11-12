@@ -1,29 +1,91 @@
 #include "main.h"
+/**
+ * tokenize - split string into an array of tokens
+ * @input: string to tokenize
+ * @tokens: array of tokens
+ *
+ * Return: number of tokens
+ */
+int tokenize(char *input, char *tokens[])
+{
+	int i = 0;
+	char *token = strtok(input, " ");
+
+	while (token != NULL)
+	{
+		tokens[i++] = token;
+		token = strtok(NULL, " ");
+	}
+	tokens[i] = NULL;
+	return (i);
+}
 
 /**
- * execCommand -  execute command passed
+ * executeCommand - execute command with execve
+ * @command: command to execute
+ * @args: command line args
+ *
+ * Return: void
+ */
+void executeCommand(char *command, char *args[])
+{
+	if (execve(command, args, NULL) == -1)
+		perror("hsh");
+}
+
+/**
+ * searchAndExecute - search for command in PATH
+ * @command: command to execute
+ * @args: arguments
+ *
+ * Return: void
+ */
+void searchAndExecute(char *command, char *args[])
+{
+	char *path = _getenv("PATH");
+	char *path_copy = _strdup(path);
+	char *token = strtok(path_copy, ":");
+
+	while (token != NULL)
+	{
+		size_t token_len = _strlen(token);
+		size_t command_len = _strlen(command);
+		size_t full_path_len = token_len + command_len + 2;
+
+		char full_path[full_path_len];
+
+		_strcnpy(full_path, token, token_len);
+		full_path[token_len] = '/';
+		_strcnpy(full_path + token_len + 1, command, command_len + 1);
+
+		if (access(full_path, X_OK) == 0)
+		{
+			args[0] = _strdup(full_path);
+			executeCommand(full_path, args);
+			free(args[0]);
+			return;
+		}
+		token = strtok(NULL, ":");
+	}
+
+	perror("hsh");
+}
+
+/**
+ * mainExecCommand -  execute command passed
  * @input: string command input by user
  *
  * Return: None
  */
-void execCommand(char *input)
+void mainExecCommand(char *input)
 {
-	char *token;
 	char *args[MAX_INPUT_SIZE / 2 + 1];
-	int i = 0;
+	int arg_count = tokenize(input, args);
 
-	token = strtok(input, " ");
-	while (token != NULL)
-	{
-		args[i++] = token;
-		token = strtok(NULL, " ");
-	}
-	args[i] = NULL;
-
-	if (execve(input, args, NULL) == -1)
-	{
-		perror("hsh");
-	}
+	if (access(args[0], X_OK) == 0)
+		executeCommand(args[0], args);
+	else
+		searchAndExecute(args[0], args);
 }
 
 /**
@@ -45,6 +107,5 @@ void checkChildProcess(pid_t pid)
 	/* Check if the child process exited successfully */
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		write(STDERR_FILENO, "Error: Command not found\n", 25);
-
 }
 
