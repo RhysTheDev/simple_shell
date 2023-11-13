@@ -17,8 +17,7 @@ int main(void)
 
 		if (_strcmp(buffer, "exit") == 0)
 		{
-			free(buffer);
-			exit(EXIT_SUCCESS);
+			exitShell(buffer);
 		}
 		if (_strcmp(buffer, "env") == 0)
 			printEnvironment();

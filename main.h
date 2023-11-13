@@ -54,6 +54,10 @@ char *_getline(size_t *input_size);
 
 char *_strtok(char *str, const char *delim);
 
+void exitShell(char *buffer);
+
+int _atoi(char *str);
+
 
 #define MAX_INPUT_SIZE 1024
 
