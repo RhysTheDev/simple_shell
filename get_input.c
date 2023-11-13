@@ -10,19 +10,14 @@
 char *get_input(size_t *input_size)
 {
 	char *buffer = NULL;
-	ssize_t read;
 
-	read = getline(&buffer, input_size, stdin);
-
-	if (read == -1)
+	buffer = _getline(input_size);
+	if (buffer == NULL)
 	{
-		free(buffer);
-		write(STDOUT_FILENO, "EXITING THE SHELL AT get_input", MAX_INPUT_SIZE);
+		/* Handle end-of-file or read error */
+		write(STDOUT_FILENO, "EXITING THE SHELL", 18);
 		exit(EXIT_SUCCESS);
 	}
-
-	if (buffer[read - 1] == '\n')
-		buffer[read - 1] = '\0';
 
 	return (buffer);
 }
