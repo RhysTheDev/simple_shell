@@ -12,7 +12,7 @@ char *_get_path_of_exe(char *command)
 
 	executable = NULL;
 	path = _getenv("PATH");
-	token = strtok(path, ":");
+	token = _strtok(path, ":");
 
 	if (path == NULL)
 		return (NULL);
@@ -27,7 +27,7 @@ char *_get_path_of_exe(char *command)
 			break;
 		}
 		free(full_path);
-		token = strtok(NULL, ":");
+		token = _strtok(NULL, ":");
 	}
 	return (executable);
 }
