@@ -9,12 +9,12 @@
 int tokenize(char *input, char *tokens[])
 {
 	int i = 0;
-	char *token = strtok(input, " ");
+	char *token = _strtok(input, " ");
 
 	while (token != NULL)
 	{
 		tokens[i++] = token;
-		token = strtok(NULL, " ");
+		token = _strtok(NULL, " ");
 	}
 	tokens[i] = NULL;
 	return (i);
@@ -44,7 +44,7 @@ void searchAndExecute(char *command, char *args[])
 {
 	char *path = _getenv("PATH");
 	char *path_copy = _strdup(path);
-	char *token = strtok(path_copy, ":");
+	char *token = _strtok(path_copy, ":");
 
 	while (token != NULL)
 	{
@@ -65,7 +65,7 @@ void searchAndExecute(char *command, char *args[])
 			free(args[0]);
 			return;
 		}
-		token = strtok(NULL, ":");
+		token = _strtok(NULL, ":");
 	}
 
 	perror("hsh");

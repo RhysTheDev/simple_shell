@@ -52,6 +52,9 @@ void printEnvironment(void);
 
 char *_getline(size_t *input_size);
 
+char *_strtok(char *str, const char *delim);
+
+
 #define MAX_INPUT_SIZE 1024
 
 static char buffer[MAX_INPUT_SIZE];
