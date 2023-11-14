@@ -58,6 +58,8 @@ void exitShell(char *buffer);
 
 int _atoi(char *str);
 
+int setEnvVar(char *buffer);
+
 
 #define MAX_INPUT_SIZE 1024
 
