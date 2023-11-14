@@ -80,12 +80,37 @@ void searchAndExecute(char *command, char *args[])
 void mainExecCommand(char *input)
 {
 	char *args[MAX_INPUT_SIZE / 2 + 1];
+	char *home_dir;
+	char *old_pwd;
 	int arg_count = tokenize(input, args);
 
-	if (access(args[0], X_OK) == 0)
-		executeCommand(args[0], args);
+
+	if (arg_count > 0 && _strcmp(args[0], "cd") == 0)
+	{
+		home_dir = _getenv("HOME");
+		old_pwd = _getenv("OLDPWD");
+
+		if (arg_count == 1 || _strcmp(args[1], "~") == 0)
+			chdir(home_dir);
+		else if (_strcmp(args[1], "-") == 0)
+			chdir(old_pwd ? old_pwd : ".");
+		else
+		{
+			if (chdir(args[1]) == -1)
+				perror("cd");
+		}
+
+		setenv("OLDPWD", _getenv("PWD"), 1);
+		setenv("PWD", getcwd(NULL, 0), 1);
+	}
 	else
-		searchAndExecute(args[0], args);
+	{
+		free(input);
+		if (access(args[0], X_OK) == 0)
+			executeCommand(args[0], args);
+		else
+			searchAndExecute(args[0], args);
+	}
 }
 
 /**

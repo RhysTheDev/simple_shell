@@ -13,16 +13,31 @@
 #include <errno.h>
 
 extern char **environ;
+int _atoi(char *str);
 
-int _strncmp(char *str1, char *str2, int n);
-
-int _strlen(char *s);
+char *_getline(size_t *input_size);
 
 int _strcmp(char *s1, char *s2);
 
-int main(void);
+int _strcspn_(const char *str, const char *reject);
 
-void mainExecCommand(char *input);
+char *_strdup(char *str);
+
+void _strcnpy(char *dest, const char *src, size_t n);
+
+char *_strtok(char *str, const char *delim);
+
+char *display_prompt(void);
+
+void exitShell(char *buffer);
+
+char *_getenv(char *name);
+
+char *get_input(size_t *input_size);
+
+char *_get_path_of_exe(char *command);
+
+void printEnvironment(void);
 
 int tokenize(char *input, char *tokens[]);
 
@@ -30,33 +45,17 @@ void executeCommand(char *command, char *args[]);
 
 void searchAndExecute(char *command, char *args[]);
 
+void mainExecCommand(char *input);
+
 void checkChildProcess(pid_t pid);
 
-char *_get_path_of_exe(char *command);
-
-char *_getenv(char *name);
-
-char *display_prompt(void);
-
-void _strcnpy(char *dest, const char *src, size_t n);
-
-char *_strdup(char *str);
-
-int _strcspn_(const char *str, const char *reject);
-
-char *get_input(size_t *input_size);
+int main(void);
 
 void sigintHandler(int signal);
 
-void printEnvironment(void);
+int _strlen(char *s);
 
-char *_getline(size_t *input_size);
-
-char *_strtok(char *str, const char *delim);
-
-void exitShell(char *buffer);
-
-int _atoi(char *str);
+int _strncmp(char *str1, char *str2, int n);
 
 
 #define MAX_INPUT_SIZE 1024
