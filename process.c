@@ -50,9 +50,9 @@ void searchAndExecute(char *command, char *args[])
 	{
 		size_t token_len = _strlen(token);
 		size_t command_len = _strlen(command);
-		/*size_t full_path_len = token_len + command_len + 2;*/
+		size_t full_path_len = token_len + command_len + 2;
 
-		char full_path[MAX_INPUT_SIZE];
+		char full_path[full_path_len];
 
 		_strcnpy(full_path, token, token_len);
 		full_path[token_len] = '/';
