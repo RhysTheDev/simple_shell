@@ -44,7 +44,7 @@ void searchAndExecute(char *command, char *args[])
 {
 	char *path = _getenv("PATH");
 	char *path_copy = _strdup(path);
-	char *token = _strtok(path_copy, ":");
+	char *token = strtok(path_copy, ":");
 
 	while (token != NULL)
 	{
