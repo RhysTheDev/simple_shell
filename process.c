@@ -64,12 +64,13 @@ void searchAndExecute(char *command, char *args[])
 			args[0] = _strdup(full_path);
 			executeCommand(full_path, args);
 			free(args[0]);
+            free(full_path);
 			return;
 		}
 		token = _strtok(NULL, ":");
 	}
 
-	perror("hsh");
+	perror("hsh: problem here");
 }
 
 /**
