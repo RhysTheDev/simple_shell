@@ -60,6 +60,7 @@ void searchAndExecute(char *command, char *args[])
 
 		if (access(full_path, X_OK) == 0)
 		{
+            printf("Executing: %s\n", full_path);
 			args[0] = _strdup(full_path);
 			executeCommand(full_path, args);
 			free(args[0]);
