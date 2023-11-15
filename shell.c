@@ -37,7 +37,6 @@ int main(void)
 		}
 		else
 			checkChildProcess(pid);
-		free(buffer);
 	}
 	return (EXIT_SUCCESS);
 }
