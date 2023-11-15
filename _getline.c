@@ -5,6 +5,10 @@
  *
  * Return: input
  */
+static char buffer[MAX_INPUT_SIZE];
+static size_t buffer_index;
+static size_t buffer_size;
+
 char *_getline(size_t *input_size)
 {
 	char *line = NULL;

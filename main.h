@@ -56,9 +56,5 @@ int _strlen(char *s);
 int _strncmp(char *str1, char *str2, int n);
 
 #define MAX_INPUT_SIZE 1024
-static char buffer[MAX_INPUT_SIZE];
-static size_t buffer_index;
-static size_t buffer_size;
-
 
 #endif
