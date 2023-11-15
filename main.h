@@ -51,13 +51,9 @@ void checkChildProcess(pid_t pid);
 
 int main(void);
 
-void sigintHandler(int signal);
-
 int _strlen(char *s);
 
 int _strncmp(char *str1, char *str2, int n);
-
-
 
 #define MAX_INPUT_SIZE 1024
 static char buffer[MAX_INPUT_SIZE];
