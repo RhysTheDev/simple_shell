@@ -10,6 +10,7 @@ int main(void)
 {
 	int status = 1;
 	char *buffer;
+	pid_t pid;
 
 	while (status)
 	{
@@ -26,8 +27,6 @@ int main(void)
 		buffer[_strcspn_(buffer, "\n")] = '\0';
 
 		/* Fork a new process */
-		pid_t pid;
-
 		pid = fork();
 		if (pid == 0)
 			mainExecCommand(buffer);
