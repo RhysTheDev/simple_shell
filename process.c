@@ -22,6 +22,44 @@ int tokenize(char *input, char *tokens[])
 }
 
 /**
+ * execute - Executes the commands passe by the user
+ * @command: command to execute
+ * @args: command line args
+ *
+ * Return: void
+  */
+
+int execute(char *command, char *args[])
+{
+	int status;
+
+	if (command[0] == '/' || command[0] == '.')
+	{
+		printf("Command set: %s\n", command);
+		command = args[0];
+	}
+	else
+	{
+		printf("Command: %s\n", command);
+		command = _get_path_of_exe(command);
+	}
+	if (!command)
+	{
+		perror("hsh");
+		return (0);
+	}
+	if (execve(command, args, NULL) == -1)
+	{
+		perror("hsh");
+	}
+	else
+	{
+		wait(&status);
+	}
+	return (1);
+}
+
+/**
  * executeCommand - execute command with execve
  * @command: command to execute
  * @args: command line args
@@ -61,11 +99,11 @@ void searchAndExecute(char *command, char *args[])
 		token_len = _strlen(token);
 		command_len = _strlen(command);
 		full_path_len = token_len + command_len + 2;
-
 		full_path = malloc(full_path_len);
 
 		_strcnpy(full_path, token, token_len);
 		_strcnpy(full_path + token_len + 1, command, command_len + 1);
+		printf("full_path: %s\n", full_path);
 
 		if (access(full_path, X_OK) == 0 && stat(full_path, &st) == 0)
 		{
@@ -119,28 +157,10 @@ void mainExecCommand(char *input)
 		if (access(args[0], X_OK) == 0)
 			executeCommand(args[0], args);
 		else
-			searchAndExecute(args[0], args);
+			execute(args[0], args);
+			/*searchAndExecute(args[0], args);*/
 	}
 }
 
-/**
- * checkChildProcess -  takes PID of child process and waits for it to end
- * @pid: PID of the child process to wait for
- *
- * Return: None
- */
-void checkChildProcess(pid_t pid)
-{
-	int status = 0;
 
-	if (waitpid(pid, &status, 0) == -1)
-	{
-		perror("Error waiting for child process");
-		exit(EXIT_FAILURE);
-	}
-
-	/* Check if the child process exited successfully */
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		write(STDERR_FILENO, "Error: Command not found\n", 25);
-}
 
