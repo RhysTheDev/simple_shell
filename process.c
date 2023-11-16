@@ -1,3 +1,4 @@
+#include <sys/stat.h>
 #include "main.h"
 /**
  * tokenize - split string into an array of tokens
@@ -45,32 +46,38 @@ void searchAndExecute(char *command, char *args[])
 	char *path = _getenv("PATH");
 	char *path_copy = _strdup(path);
 	char *token = strtok(path_copy, ":");
+	ssize_t token_len;
+	ssize_t command_len;
+	size_t full_path_len;
+	char *full_path;
 
+	if (path_copy == NULL)
+		perror("Can't find path");
+
+	command = _get_path_of_exe(command);
 	while (token != NULL)
 	{
-		size_t token_len = _strlen(token);
-		size_t command_len = _strlen(command);
-		size_t full_path_len = token_len + command_len + 2;
+		token_len = _strlen(token);
+		command_len = _strlen(command);
+		full_path_len = token_len + command_len + 2;
 
-		char *full_path = malloc(full_path_len);
+		full_path = malloc(full_path_len);
 
 		_strcnpy(full_path, token, token_len);
-		full_path[token_len] = '/';
 		_strcnpy(full_path + token_len + 1, command, command_len + 1);
 
 		if (access(full_path, X_OK) == 0)
 		{
-            printf("Executing: %s\n", full_path);
 			args[0] = _strdup(full_path);
 			executeCommand(full_path, args);
 			free(args[0]);
-            free(full_path);
+			free(full_path);
 			return;
 		}
 		token = _strtok(NULL, ":");
 	}
 
-	perror("hsh: problem here");
+	perror("hsh");
 }
 
 /**

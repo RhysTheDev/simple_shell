@@ -1,3 +1,4 @@
+#include <sys/stat.h>
 #include "main.h"
 
 /**
@@ -8,26 +9,26 @@
  */
 char *_get_path_of_exe(char *command)
 {
-	char *path, *token, *full_path, *executable;
+	struct stat st;
+	int i;
+	char *path = _getenv("PATH");
+	char **dirs = tokenize_env(path);
+	char *cmd = command;
+	char *fullpath = malloc(sizeof(char) * 1024);
 
-	executable = NULL;
-	path = _getenv("PATH");
-	token = _strtok(path, ":");
-
-	if (path == NULL)
+	if (fullpath == NULL)
 		return (NULL);
-	while (token != NULL)
+
+	for (i = 0; dirs[i]; i++)
 	{
-		full_path = malloc(_strlen(token) + _strlen(command) + 2);
-		if (full_path == NULL)
-			return (NULL);
-		if (access(full_path, F_OK) == 0)
-		{
-			executable = full_path;
-			break;
-		}
-		free(full_path);
-		token = _strtok(NULL, ":");
+		fullpath[0] = 0;
+		_strcat(fullpath, dirs[i]);
+		_strcat(fullpath, "/");
+		_strcat(fullpath, cmd);
+		if (stat(fullpath, &st) == 0)
+			return (fullpath);
+
 	}
-	return (executable);
+	free(fullpath);
+	return (NULL);
 }
