@@ -19,13 +19,12 @@ char **tokenize_env(char *path)
 	if (path == NULL)
 		return (NULL);
 
-	token = _strtok(path_copy, ":");
+	token = strtok(path_copy, ":");
 	while (token != NULL)
 	{
 		arr[i++] = token;
 		token = strtok(NULL, ":");
 	}
-
 
 	return (arr);
 }

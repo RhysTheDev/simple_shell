@@ -9,8 +9,8 @@
 int main(void)
 {
 	int status = 1;
+	char **arguments;
 	char *buffer;
-	pid_t pid;
 
 	while (status)
 	{
@@ -23,21 +23,17 @@ int main(void)
 		if (_strcmp(buffer, "env") == 0)
 			printEnvironment();
 
-		/* Read user buffer */
-		buffer[_strcspn_(buffer, "\n")] = '\0';
-
-		/* Fork a new process */
-		pid = fork();
-		if (pid == 0)
-			mainExecCommand(buffer);
-		else if (pid == -1)
+		arguments = _splitline(buffer);
+		if (arguments == NULL)
 		{
-			perror("fork");
-			exit(EXIT_FAILURE);
+			free(buffer);
+			free(arguments);
+			continue;
 		}
-		else
-			checkChildProcess(pid);
+		execute(arguments);
+		free(buffer);
+		free(arguments);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 

@@ -1,13 +1,13 @@
 #include "main.h"
 #define BUFSIZE 1024
 /**
-  * splitline - Splits a line passed to it and stores the words into an array
+  * _splitline - Splits a line passed to it and stores the words into an array
   * @line: The line to be split
   *
   * Return: The array of tokens if succesful
   */
 
-char **splitline(char *line)
+char **_splitline(char *line)
 {
 	int buffsize = BUFSIZE, position = 0;
 	char **tokens = malloc(buffsize * sizeof(char *));

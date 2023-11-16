@@ -22,42 +22,43 @@ int tokenize(char *input, char *tokens[])
 }
 
 /**
- * execute - Executes the commands passe by the user
- * @command: command to execute
+ * execute - Executes the commands passed by the user
  * @args: command line args
  *
  * Return: void
   */
 
-int execute(char *command, char *args[])
+int execute(char **args)
 {
+	pid_t my_pid;
+	char *command = args[0];
 	int status;
 
-	if (command[0] == '/' || command[0] == '.')
-	{
-		printf("Command set: %s\n", command);
-		command = args[0];
-	}
-	else
-	{
-		printf("Command: %s\n", command);
-		command = _get_path_of_exe(command);
-	}
-	if (!command)
-	{
-		perror("hsh");
-		return (0);
-	}
-	if (execve(command, args, NULL) == -1)
+	my_pid = fork();
+	if (my_pid == -1)
 	{
 		perror("hsh");
 	}
-	else
+
+	if (my_pid == 0)
 	{
+		/*mainExecCommand*/
+		if (command[0] == '/' || command[0] == '.')
+			command = args[0];
+		else
+			command = _get_path_of_exe(command);
+		if (!command)
+		{
+			perror("hsh");
+			return (0);
+		}
+		executeCommand(command, args);
+	}
+	else
 		wait(&status);
-	}
 	return (1);
 }
+
 
 /**
  * executeCommand - execute command with execve
@@ -131,14 +132,14 @@ void mainExecCommand(char *input)
 	char *home_dir;
 	char *old_pwd;
 	int arg_count = tokenize(input, args);
-    char **arguments;
+	char **arguments;
 
-    arguments = splitline(input);
-    if (arguments == NULL)
-    {
-        free(input);
-        free(arguments);
-    }
+	arguments = _splitline(input);
+	if (arguments == NULL)
+	{
+		free(input);
+		free(arguments);
+	}
 	if (arg_count > 0 && _strcmp(args[0], "cd") == 0)
 	{
 		home_dir = _getenv("HOME");
@@ -163,8 +164,8 @@ void mainExecCommand(char *input)
 		if (access(arguments[0], X_OK) == 0)
 			executeCommand(arguments[0], arguments);
 		else
-			execute(arguments[0], arguments);
-			/*searchAndExecute(args[0], args);*/
+			execute(arguments);
+
 	}
 }
 

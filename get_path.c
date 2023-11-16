@@ -18,7 +18,6 @@ char *_get_path_of_exe(char *command)
 
 	if (fullpath == NULL)
 		return (NULL);
-
 	for (i = 0; dirs[i]; i++)
 	{
 		fullpath[0] = 0;
