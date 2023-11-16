@@ -61,7 +61,9 @@ char *_strcat(char *dest, char *src);
 
 void readInput(char *buffer, size_t *buffer_index, size_t *bs, char *line);
 
-int execute(char *command, char *args[]);
+int execute(char **args);
+
+char **_splitline(char *line);
 
 #define MAX_INPUT_SIZE 1024
 
