@@ -1,0 +1,9 @@
+.TH hsh 1 "16 November 2023" "Rhys and Morris" "Manual"
+.hy
+.SH NAME
+.PP
+hsh - A simple UNIX command interpreter
+.PP
+.SH SYNOPSIS
+#include "main.h"
+
