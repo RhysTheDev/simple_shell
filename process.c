@@ -50,6 +50,7 @@ void searchAndExecute(char *command, char *args[])
 	ssize_t command_len;
 	size_t full_path_len;
 	char *full_path;
+	struct stat st;
 
 	if (path_copy == NULL)
 		perror("Can't find path");
@@ -66,7 +67,7 @@ void searchAndExecute(char *command, char *args[])
 		_strcnpy(full_path, token, token_len);
 		_strcnpy(full_path + token_len + 1, command, command_len + 1);
 
-		if (access(full_path, X_OK) == 0)
+		if (access(full_path, X_OK) == 0 && stat(full_path, &st) == 0)
 		{
 			args[0] = _strdup(full_path);
 			executeCommand(full_path, args);
