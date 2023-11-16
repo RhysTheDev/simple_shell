@@ -131,8 +131,14 @@ void mainExecCommand(char *input)
 	char *home_dir;
 	char *old_pwd;
 	int arg_count = tokenize(input, args);
+    char **arguments;
 
-
+    arguments = splitline(input);
+    if (arguments == NULL)
+    {
+        free(input);
+        free(arguments);
+    }
 	if (arg_count > 0 && _strcmp(args[0], "cd") == 0)
 	{
 		home_dir = _getenv("HOME");
@@ -154,10 +160,10 @@ void mainExecCommand(char *input)
 	else
 	{
 		free(input);
-		if (access(args[0], X_OK) == 0)
-			executeCommand(args[0], args);
+		if (access(arguments[0], X_OK) == 0)
+			executeCommand(arguments[0], arguments);
 		else
-			execute(args[0], args);
+			execute(arguments[0], arguments);
 			/*searchAndExecute(args[0], args);*/
 	}
 }
