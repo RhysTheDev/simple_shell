@@ -15,7 +15,6 @@ char *get_input(size_t *input_size)
 	if (buffer == NULL)
 	{
 		/* Handle end-of-file or read error */
-		write(STDOUT_FILENO, "EXITING THE SHELL", 18);
 		exit(EXIT_SUCCESS);
 	}
 
