@@ -42,6 +42,7 @@ int execute(char **args)
 
 	if (my_pid == 0)
 	{
+        write(STDOUT_FILENO, "Redirected output:\n", 19);
 		/*mainExecCommand*/
 		if (command[0] == '/' || command[0] == '.')
 			command = args[0];
